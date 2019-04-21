@@ -8,5 +8,6 @@ Dotfiles:
 - [init.vim](init.vim)
 - [Preferences.sublime-settings](Preferences.sublime-settings)
 - [Package Control.sublime-settings](Package%20Control.sublime-settings)
+- [iterm2-profiles.json](iterm2-profiles.json)
 - More soon...
 
