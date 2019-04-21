@@ -1,0 +1,48 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"All Autocomplete",
+		"Autotools",
+		"ayu",
+		"Babel",
+		"Base16 Color Schemes",
+		"BracketHighlighter",
+		"C Improved",
+		"C++ Completions",
+		"Case Conversion",
+		"CodeFormatter",
+		"ColorPicker",
+		"Colorsublime",
+		"CSS3",
+		"Cucumber",
+		"DashDoc",
+		"Dockerfile Syntax Highlighting",
+		"DoxyDoxygen (evolution)",
+		"EditorConfig",
+		"Elixir",
+		"Git blame",
+		"GitGutter",
+		"Handlebars",
+		"HTML5",
+		"Indent XML",
+		"JsFormat",
+		"JSX",
+		"LESS",
+		"LSP",
+		"nginx",
+		"Ninja",
+		"Package Control",
+		"PEG.js",
+		"Pretty JSON",
+		"Pretty YAML",
+		"Protobuf Syntax Hightlighting",
+		"Rust Enhanced",
+		"SideBarEnhancements",
+		"Terminal"
+	]
+}

@@ -7,5 +7,6 @@ Dotfiles:
 - [.motd](.motd)
 - [init.vim](init.vim)
 - [Preferences.sublime-settings](Preferences.sublime-settings)
+- [Package Control.sublime-settings](Package Control.sublime-settings)
 - More soon...
 
