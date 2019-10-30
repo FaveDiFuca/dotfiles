@@ -12,7 +12,7 @@
 # ╚════════════════════════════════════════════════════════════════════════════╝
 
 export DOT_ZSHRC="$HOME/.zshrc"
-export DOT_ZSHRC_VERSION="0.20"
+export DOT_ZSHRC_VERSION="0.21"
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
@@ -84,7 +84,7 @@ DOT_SECRETS="$HOME/.secrets"
 
 # GCloud SDK
 function __init_gcloud {
-  local gclouddir="/opt/google-cloud-sdk"
+  local gclouddir="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk"
   local gclouddir_path="$gclouddir/path.zsh.inc"
   local gclouddir_completion="$gclouddir/completion.zsh.inc"
 
