@@ -110,7 +110,7 @@ unfunction __init_gcloud
 && eval $(/usr/libexec/path_helper -s)
 
 # /usr/local/* (Homebrew, etc)
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/binutils/bin:$PATH
 export MANPATH="/usr/local/man:$MANPATH"
 
 # Ruby
