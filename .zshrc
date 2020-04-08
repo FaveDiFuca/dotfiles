@@ -12,7 +12,7 @@
 # ╚════════════════════════════════════════════════════════════════════════════╝
 
 export DOT_ZSHRC="$HOME/.zshrc"
-export DOT_ZSHRC_VERSION="0.21"
+export DOT_ZSHRC_VERSION="0.22"
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
@@ -141,6 +141,17 @@ export WORKON_HOME=$HOME/.virtualenvs
 [[ -d "$HOME/.cargo/bin" ]] \
 && export PATH=$HOME/.cargo/bin:$PATH
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+
+# fasd
+eval "$(fasd --init auto)"
+
+type cargo > /dev/null \
+&& export PATH=~/.cargo/bin:$PATH
+
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ ZSH                                                                        ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
@@ -150,7 +161,7 @@ export ZSH=$HOME/.oh-my-zsh
 || sh -c "$(curl -fsSL \
     https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-ZSH_THEME="wezm"
+ZSH_THEME="geometry-zsh/geometry"
 CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="false"
 export UPDATE_ZSH_DAYS=10
@@ -162,7 +173,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# ZSH_CUSTOM=/usr/local/opt/zplug/repos
 
 [[ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]] \
 && type git > /dev/null \
@@ -170,10 +181,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 
 [[ $OS = "Darwin" ]] && plugins=(common-aliases docker encode64 extract git \
   gpg-agent history mix screen ssh-agent tmux-cssh urltools \
-  virtualenvwrapper zsh-autosuggestions brew osx)
+  virtualenvwrapper zsh-autosuggestions brew osx fzf)
 [[ $OS = "Linux" ]]  && plugins=(common-aliases docker encode64 extract git \
   gpg-agent history mix screen ssh-agent tmux-cssh urltools \
-  virtualenvwrapper zsh-autosuggestions)
+  virtualenvwrapper zsh-autosuggestions fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -560,10 +571,13 @@ type workon > /dev/null && workon | grep local > /dev/null && workon local
 alias ..='cd ..'
 alias ...='cd ../../'
 alias re='cd -'
+alias cat=bat
+alias find=fd
+alias ls='exa --git'
 alias myip="curl http://ipecho.net/plain; echo"
 alias fucking=sudo
 type gotop > /dev/null \
-&& alias top='gotop'
+&& alias top='btm'
 type rainbowstream > /dev/null \
 && alias twitter="rainbowstream"
 type rslsync > /dev/null \
