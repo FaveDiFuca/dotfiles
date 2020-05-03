@@ -585,6 +585,7 @@ type rslsync > /dev/null \
 type nvim > /dev/null \
 && alias vi=nvim \
 && alias vim=nvim
+alias git-crypt-add-myself='git-crypt add-gpg-user D2908F9977E1FE0B8A36F357C228EF0A530AF06F'
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
