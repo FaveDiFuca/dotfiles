@@ -44,7 +44,7 @@ call plug#end()
 " ╚════════════════════════════════════════════════════════════════════════════╝
 
 set termguicolors
-let ayucolor="mirage"
+let ayucolor="dark"
 colorscheme ayu
 
 function! ChangeColorscheme(scheme)
