@@ -576,7 +576,7 @@ alias find=fd
 alias ls='exa --git'
 alias myip="curl http://ipecho.net/plain; echo"
 alias fucking=sudo
-type gotop > /dev/null \
+type btm > /dev/null \
 && alias top='btm'
 type rainbowstream > /dev/null \
 && alias twitter="rainbowstream"
