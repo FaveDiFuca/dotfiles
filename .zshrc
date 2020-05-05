@@ -10,6 +10,7 @@
 # ║         * github.com/mrusme * twitter.com/mrusme * mrus@mrus.me *          ║
 # ║                                                                            ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
+# zmodload zsh/zprof
 
 export DOT_ZSHRC="$HOME/.zshrc"
 export DOT_ZSHRC_VERSION="0.22"
@@ -18,6 +19,7 @@ export DOT_ZSHRC_VERSION="0.22"
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Tmux Magic (via SSH)                                                       ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
+
 type tmux > /dev/null \
 && [[ -n $SSH_CONNECTION ]] \
 && [[ -z $TMUX ]] \
@@ -82,8 +84,53 @@ DOT_SECRETS="$HOME/.secrets"
 # ║ $PATH                                                                      ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 
-# GCloud SDK
-function __init_gcloud {
+[[ $OS = "Darwin" ]] \
+&& eval $(/usr/libexec/path_helper -s)
+
+# /usr/local/* (Homebrew, etc)
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/binutils/bin:$PATH
+export MANPATH="/usr/local/man:$MANPATH"
+
+# Cargo (Rust)
+[[ -d "$HOME/.cargo/bin" ]] \
+&& export PATH=$HOME/.cargo/bin:$PATH
+
+[[ $OS = "Darwin" ]] \
+&& export GOROOT=/usr/local/opt/go/libexec
+
+# Python virtualenv
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+export WORKON_HOME=$HOME/.virtualenvs
+function activate.virtualenv {
+  type virtualenvwrapper_lazy.sh > /dev/null \
+  && source $(which virtualenvwrapper_lazy.sh) \
+  && workon | grep local > /dev/null \
+  && workon local \
+  && echo "Activated local." \
+  || echo "Could not load virtualenvwrapper."
+}
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+function activate.nvm {
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+  # [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+}
+
+# Ruby
+[[ $OS = "Darwin" ]] \
+&& export PATH=/usr/local/Cellar/ruby/$(ls -1 /usr/local/Cellar/ruby/ \
+                                        | sort \
+                                        | tail -n 1)/bin:$PATH
+
+# Rubygems
+type gem > /dev/null \
+&& export PATH=$(gem env \
+              | grep "EXECUTABLE DIRECTORY" \
+              | awk -F ': ' '{ print $2 }'):$PATH
+
+# GCloud
+function activate.gcloud {
   local gclouddir="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk"
   local gclouddir_path="$gclouddir/path.zsh.inc"
   local gclouddir_completion="$gclouddir/completion.zsh.inc"
@@ -103,54 +150,7 @@ function __init_gcloud {
   [[ -e $gclouddir_completion ]] \
   && source $gclouddir_completion
 }
-__init_gcloud
-unfunction __init_gcloud
 
-[[ $OS = "Darwin" ]] \
-&& eval $(/usr/libexec/path_helper -s)
-
-# /usr/local/* (Homebrew, etc)
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/binutils/bin:$PATH
-export MANPATH="/usr/local/man:$MANPATH"
-
-# Ruby
-[[ $OS = "Darwin" ]] \
-&& export PATH=/usr/local/Cellar/ruby/$(ls -1 /usr/local/Cellar/ruby/ \
-                                        | sort \
-                                        | tail -n 1)/bin:$PATH
-
-# Rubygems
-type gem > /dev/null \
-&& export PATH=$(gem env \
-              | grep "EXECUTABLE DIRECTORY" \
-              | awk -F ': ' '{ print $2 }'):$PATH
-
-
-[[ $OS = "Darwin" ]] \
-&& export GOROOT=/usr/local/opt/go/libexec
-
-# Python virtualenv
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-
-# Flutter
-[[ -d "/opt/flutter" ]] \
-&& export PATH=$PATH:/opt/flutter/bin
-
-# Cargo (Rust)
-[[ -d "$HOME/.cargo/bin" ]] \
-&& export PATH=$HOME/.cargo/bin:$PATH
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
-
-# fasd
-eval "$(fasd --init auto)"
-
-type cargo > /dev/null \
-&& export PATH=~/.cargo/bin:$PATH
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ ZSH                                                                        ║
@@ -164,7 +164,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="geometry-zsh/geometry"
 CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="false"
-export UPDATE_ZSH_DAYS=10
+UPDATE_ZSH_DAYS=10
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="false"
@@ -175,16 +175,21 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 # HIST_STAMPS="mm/dd/yyyy"
 # ZSH_CUSTOM=/usr/local/opt/zplug/repos
 
-[[ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]] \
+ZSH_AUTOSUGGESTIONS=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+[[ ! -d $ZSH_AUTOSUGGESTIONS ]] \
 && type git > /dev/null \
 && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
+[[ -d $ZSH_AUTOSUGGESTIONS && $(find "$ZSH_AUTOSUGGESTIONS/.git" -maxdepth 0 -type d -mmin +1440 | wc -l | tr -d '[:space:]') == "0" ]] \
+|| git -C $ZSH_AUTOSUGGESTIONS pull
+
 [[ $OS = "Darwin" ]] && plugins=(common-aliases docker encode64 extract git \
   gpg-agent history mix screen ssh-agent tmux-cssh urltools \
-  virtualenvwrapper zsh-autosuggestions brew osx fzf)
+  zsh-autosuggestions brew osx fzf)
 [[ $OS = "Linux" ]]  && plugins=(common-aliases docker encode64 extract git \
   gpg-agent history mix screen ssh-agent tmux-cssh urltools \
-  virtualenvwrapper zsh-autosuggestions fzf)
+  zsh-autosuggestions fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -269,7 +274,7 @@ then
   }
 fi
 
-if [[ $OS = "Darwin" ]] || [[ $OS = "Linux" && "$(uname -a | grep -i gentoo)" ]]
+if [[ $OS = "Darwin" ]] || [[ $OS = "Linux" && "$(uname -a | grep -i gentoo)" ]] || type pacman > /dev/null
 then
   _aptitude()
   {
@@ -279,18 +284,6 @@ then
                                 clean reinstall" -- $cur) )
   }
 fi
-
-
-# ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ Rainbow!!!                                                                 ║
-# ╚════════════════════════════════════════════════════════════════════════════╝
-
-function rainbow {
-  for i in {0..255}
-  do
-    tput setaf $i; printf "%03d" $i; echo -n ": "; printf '#%.0s' {1..75}; echo ''
-  done
-}
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
@@ -353,17 +346,6 @@ function openssl-encrypt () {
 function openssl-decrypt () {
     openssl aes-256-cbc -d -in "${1}" -out "${2}"
 }
-
-
-# ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ npm-check-updates                                                          ║
-# ╚════════════════════════════════════════════════════════════════════════════╝
-
-function npm-global-update () {
-  type ncu > /dev/null || npm install -g npm-check-updates
-  ncu -g -j
-}
-alias ncug="npm-global-update"
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
@@ -521,47 +503,46 @@ function pushover() {
 
 if [ -n $GITHUB_TOKEN ]
 then
-  type gist > /dev/null \
-  || (type gem > /dev/null \
-      && gem install gist \
-      && export PATH=$(gem env \
-                       | grep "EXECUTABLE DIRECTORY" \
-                       | awk -F ': ' '{ print $2 }'):$PATH)
-  # Workaround while waiting for
-  # https://github.com/defunkt/gist/pull/232#issuecomment-468937574
-  # GITHUB_TOKEN comes from .secrets
-  echo $GITHUB_TOKEN > "$HOME/.gist"
+  if type gem > /dev/null
+  then
+    export PATH=$(gem env \
+                   | grep "EXECUTABLE DIRECTORY" \
+                   | awk -F ': ' '{ print $2 }'):$PATH
 
-  DOT_ZSHRC_DOT_GIST="$HOME/.zshrc.gist"
-  [[ -e $DOT_ZSHRC_DOT_GIST ]] \
-  || basename $(gist -l \
-                | grep '\.zshrc $' \
-                | awk '{ print $1 }') > $DOT_ZSHRC_DOT_GIST
-  export ZSHRC_GIST=$(cat $DOT_ZSHRC_DOT_GIST)
+    if ! type gist > /dev/null
+    then
+      gem install gist
+    fi
 
-  function zshrc-update-local() {
-    ZSHRC_DIFFS=$(gist -r $ZSHRC_GIST \
-                  | diff $DOT_ZSHRC - \
-                  | wc -l \
-                  | tr -d '[:space:]')
-    [[ $ZSHRC_DIFFS -eq 0 ]] || (mv $DOT_ZSHRC "$DOT_ZSHRC.previous" \
-                                && gist -r $ZSHRC_GIST > $DOT_ZSHRC)
-  }
+    # Workaround while waiting for
+    # https://github.com/defunkt/gist/pull/232#issuecomment-468937574
+    # GITHUB_TOKEN comes from .secrets
+    echo $GITHUB_TOKEN > "$HOME/.gist"
 
-  function zshrc-update-remote() {
-    local nxtversion=$(echo $DOT_ZSHRC_VERSION | awk -F '.' '{ print ++$2 }')
-    sed -i .previous \
-      's/^export DOT_ZSHRC_VERSION="\([0-9]*\)\.\([0-9]*\)"$/export DOT_ZSHRC_VERSION="\1\.'$nxtversion'"/g' $DOT_ZSHRC \
-    && gist -u "https://gist.github.com/$ZSHRC_GIST" $DOT_ZSHRC
-  }
+    DOT_ZSHRC_DOT_GIST="$HOME/.zshrc.gist"
+    [[ -e $DOT_ZSHRC_DOT_GIST ]] \
+    || basename $(gist -l \
+                  | grep '\.zshrc $' \
+                  | awk '{ print $1 }') > $DOT_ZSHRC_DOT_GIST
+    export ZSHRC_GIST=$(cat $DOT_ZSHRC_DOT_GIST)
+
+    function zshrc-update-local() {
+      ZSHRC_DIFFS=$(gist -r $ZSHRC_GIST \
+                    | diff $DOT_ZSHRC - \
+                    | wc -l \
+                    | tr -d '[:space:]')
+      [[ $ZSHRC_DIFFS -eq 0 ]] || (mv $DOT_ZSHRC "$DOT_ZSHRC.previous" \
+                                  && gist -r $ZSHRC_GIST > $DOT_ZSHRC)
+    }
+
+    function zshrc-update-remote() {
+      local nxtversion=$(echo $DOT_ZSHRC_VERSION | awk -F '.' '{ print ++$2 }')
+      sed -i .previous \
+        's/^export DOT_ZSHRC_VERSION="\([0-9]*\)\.\([0-9]*\)"$/export DOT_ZSHRC_VERSION="\1\.'$nxtversion'"/g' $DOT_ZSHRC \
+      && gist -u "https://gist.github.com/$ZSHRC_GIST" $DOT_ZSHRC
+    }
+  fi
 fi
-
-
-# ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ Python                                                                     ║
-# ╚════════════════════════════════════════════════════════════════════════════╝
-
-type workon > /dev/null && workon | grep local > /dev/null && workon local
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
@@ -571,20 +552,30 @@ type workon > /dev/null && workon | grep local > /dev/null && workon local
 alias ..='cd ..'
 alias ...='cd ../../'
 alias re='cd -'
+
 alias cat=bat
-alias find=fd
-alias ls='exa --git'
-alias myip="curl http://ipecho.net/plain; echo"
-alias fucking=sudo
+
+type fd > /dev/null \
+&& alias find='fd'
+
+type exa > /dev/null \
+&& alias ls='exa --git'
+
 type btm > /dev/null \
 && alias top='btm'
-type rainbowstream > /dev/null \
-&& alias twitter="rainbowstream"
-type rslsync > /dev/null \
-&& alias btsync="rslsync --nodaemon --config ~/.rslsync/rslsync.conf"
+
+type neomutt > /dev/null \
+&& alias mutt=neomutt
+
 type nvim > /dev/null \
 && alias vi=nvim \
 && alias vim=nvim
+
+type fzf > /dev/null \
+&& alias preview='fzf --preview="bat {} --color=always"'
+
+alias fucking=sudo
+alias myip="curl http://ipecho.net/plain; echo"
 alias git-crypt-add-myself='git-crypt add-gpg-user D2908F9977E1FE0B8A36F357C228EF0A530AF06F'
 
 
@@ -597,48 +588,9 @@ DOT_MOTD="$HOME/.motd"
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ dotfiles                                                                   ║
-# ╚════════════════════════════════════════════════════════════════════════════╝
-
-DOTFILES="$HOME/.dotfiles"
-type git > /dev/null \
-&& [[ ! -d "$DOTFILES" ]] \
-&& git clone https://github.com/mrusme/dotfiles.git "$DOTFILES"
-
-function __update_dotfiles {
-  type git > /dev/null \
-  && [[ $(find "$DOTFILES/.git" -maxdepth 0 -type d -mmin +1440 | wc -l | tr -d '[:space:]') == "0" ]] \
-  || git -C "$DOTFILES" pull
-}
-__update_dotfiles
-
-function __copy_dotfiles {
-  local DOTFILE_TMUX="$HOME/.tmux.conf"
-  type tmux > /dev/null \
-  && ([[ ! -e "$DOTFILE_TMUX" ]] \
-    || [[ $(md5sum $DOTFILE_TMUX | cut -d ' ' -f1) != $(md5sum "$DOTFILES/.tmux.conf" | cut -d ' ' -f1) ]]) \
-  && cp -i "$DOTFILES/.tmux.conf" "$DOTFILE_TMUX"
-
-  local DOTFILE_NVIM="$HOME/.config/nvim/init.vim"
-  type nvim > /dev/null \
-  && ([[ ! -e "$DOTFILE_NVIM" ]] \
-    || [[ $(md5sum $DOTFILE_NVIM | cut -d ' ' -f1) != $(md5sum "$DOTFILES/init.vim" | cut -d ' ' -f1) ]]) \
-  && mkdir -p $(dirname "$DOTFILE_NVIM") \
-  && cp -i "$DOTFILES/init.vim" "$DOTFILE_NVIM"
-
-  local DOTFILE_MUTT="$HOME/.muttrc"
-  type neomutt > /dev/null \
-  && ([[ ! -e "$DOTFILE_MUTT" ]] \
-    || [[ $(md5sum $DOTFILE_MUTT | cut -d ' ' -f1) != $(md5sum "$DOTFILES/.muttrc" | cut -d ' ' -f1) ]]) \
-  && cp -i "$DOTFILES/.muttrc" "$DOTFILE_MUTT"
-}
-__copy_dotfiles
-unfunction __copy_dotfiles
-
-
-# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Stuff other programs dare to append goes here                              ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 #
 # ...
 
+# zprof
