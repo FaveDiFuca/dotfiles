@@ -199,6 +199,7 @@ fpath=(
   $fpath
 )
 
+
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Aptitude for MacOS & Gentoo                                                ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
@@ -494,6 +495,34 @@ function pushover() {
     done
   fi
   return "${r}"
+}
+
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Terraform                                                                  ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+
+function tf {
+  if [ -z "$1" ]; then
+    terraform -help
+  else
+    OPTION=$1
+    case $1 in
+      a)           terraform apply ${@:2};;
+      c)           terraform console ${@:2};;
+      d)           terraform destroy ${@:2};;
+      e)           terraform env ${@:2};;
+      i)           terraform import ${@:2};;
+      p)           terraform plan ${@:2};;
+      r)           terraform refresh ${@:2};;
+      s)           terraform show ${@:2};;
+      t)           terraform taint ${@:2};;
+      u)           terraform untaint ${@:2};;
+      v)           terraform validate ${@:2};;
+      w)           terraform workspace ${@:2};;
+      *)           terraform ${@:1};;
+    esac
+  fi
 }
 
 
