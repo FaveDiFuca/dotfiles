@@ -184,11 +184,11 @@ ZSH_AUTOSUGGESTIONS=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestio
 [[ -d $ZSH_AUTOSUGGESTIONS && $(find "$ZSH_AUTOSUGGESTIONS/.git" -maxdepth 0 -type d -mmin +1440 | wc -l | tr -d '[:space:]') == "0" ]] \
 || git -C $ZSH_AUTOSUGGESTIONS pull
 
-[[ $OS = "Darwin" ]] && plugins=(common-aliases docker encode64 extract git \
-  gpg-agent history mix screen ssh-agent tmux-cssh urltools \
+[[ $OS = "Darwin" ]] && plugins=(docker encode64 extract git \
+  gpg-agent history mix ssh-agent urltools \
   zsh-autosuggestions brew osx fzf)
-[[ $OS = "Linux" ]]  && plugins=(common-aliases docker encode64 extract git \
-  gpg-agent history mix screen ssh-agent tmux-cssh urltools \
+[[ $OS = "Linux" ]]  && plugins=(docker encode64 extract git \
+  gpg-agent history mix ssh-agent urltools \
   zsh-autosuggestions fzf)
 
 source $ZSH/oh-my-zsh.sh
