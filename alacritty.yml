@@ -204,6 +204,9 @@ key_bindings:
   - { key: F12,      mods: Super,     chars: "\x1b[24;3~"                      }
   - { key: NumpadEnter,               chars: "\n"                              }
   - { key: N,        mods: Command,   chars: "\x01c"                           }
+  - { key: Return,   mods: Command,   chars: "\x01c"                           }
   - { key: T,        mods: Command,   chars: "\x01="                           }
+  - { key: W,        mods: Command,   chars: "\x01&"                           }
   - { key: Tab,      mods: Alt,       chars: "\x01n"                           }
   - { key: Tab,      mods: Alt|Shift, chars: "\x01p"                           }
+  - { key: R,        mods: Command|Shift, chars: "\x01,"                       }
