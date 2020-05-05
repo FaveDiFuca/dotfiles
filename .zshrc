@@ -603,6 +603,24 @@ type nvim > /dev/null \
 type fzf > /dev/null \
 && alias preview='fzf --preview="bat {} --color=always"'
 
+type eva > /dev/null \
+&& alias calc='eva'
+
+type ghcal > /dev/null \
+&& alias contributions='ghcal -u mrusme'
+
+type gron > /dev/null \
+&& alias json='gron'
+
+type hexyl > /dev/null \
+&& alias hex='hexyl'
+
+type hyperfine > /dev/null \
+&& alias benchmark='hyperfine'
+
+type irssi > /dev/null \
+&& alias irc='irssi'
+
 alias fucking=sudo
 alias myip="curl http://ipecho.net/plain; echo"
 alias git-crypt-add-myself='git-crypt add-gpg-user D2908F9977E1FE0B8A36F357C228EF0A530AF06F'
