@@ -7,6 +7,7 @@
 	[
 		"A File Icon",
 		"All Autocomplete",
+		"auto-dark",
 		"Autotools",
 		"ayu",
 		"Babel",
@@ -15,13 +16,16 @@
 		"C Improved",
 		"C++ Completions",
 		"Case Conversion",
+		"CMake",
 		"CodeFormatter",
 		"ColorPicker",
 		"Colorsublime",
 		"CSS3",
 		"Cucumber",
 		"DashDoc",
+		"Debugger",
 		"Dockerfile Syntax Highlighting",
+		"DoxyDoxygen",
 		"DoxyDoxygen (evolution)",
 		"EditorConfig",
 		"Elixir",
@@ -34,6 +38,10 @@
 		"JSX",
 		"LESS",
 		"LSP",
+		"LSP-dockerfile",
+		"LSP-json",
+		"LSP-typescript",
+		"LSP-yaml",
 		"nginx",
 		"Ninja",
 		"Package Control",
@@ -42,7 +50,10 @@
 		"Pretty YAML",
 		"Protobuf Syntax Hightlighting",
 		"Rust Enhanced",
+		"Sass",
 		"SideBarEnhancements",
-		"Terminal"
+		"Terminal",
+		"Terraform",
+		"TypeScript"
 	]
 }
