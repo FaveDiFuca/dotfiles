@@ -575,6 +575,24 @@ fi
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ dotfiles                                                                   ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+
+export DOTFILES="$HOME/Projects/@mrusme/dotfiles"
+function dotfiles-update-remote() {
+  cp ~/.zshrc "$DOTFILES/.zshrc"
+  cp ~/.tmux.conf "$DOTFILES/.tmux.conf"
+  cp ~/.config/alacritty/alacritty.yml "$DOTFILES/alacritty.yml"
+  cp ~/.config/nvim/init.vim "$DOTFILES/init.vim"
+  cp ~/.motd "$DOTFILES/.motd"
+  cp ~/.muttrc "$DOTFILES/.muttrc"
+  cp ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Package\ Control.sublime-settings "$DOTFILES/Package Control.sublime-settings"
+  cp ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings "$DOTFILES/Preferences.sublime-settings"
+  cp ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/LSP.sublime-settings "$DOTFILES/LSP.sublime-settings"
+}
+
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Aliases                                                                    ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 
