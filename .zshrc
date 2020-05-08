@@ -13,7 +13,7 @@
 # zmodload zsh/zprof
 
 export DOT_ZSHRC="$HOME/.zshrc"
-export DOT_ZSHRC_VERSION="0.22"
+export DOT_ZSHRC_VERSION="0.23"
 
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
