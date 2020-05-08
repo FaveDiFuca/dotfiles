@@ -1,0 +1,29 @@
+{
+	"clients": {
+		"elixir-ls": {
+			"command": [
+				"/Users/mrus/Projects/GitHub/elixir-ls/release/language_server.sh"
+			],
+			"languageId": "elixir",
+			"scopes": ["source.elixir"],
+			"settings": {
+			},
+			"syntaxes": [
+				"Packages/Elixir/Syntaxes/Elixir.tmLanguage",
+			]
+		},
+		"terraform": {
+			"command": ["terraform-lsp"],
+			"enabled": true,
+			"languageId": "terraform",
+			"scopes": ["source.terraform"],
+			"syntaxes":  ["Packages/Terraform/Terraform.sublime-syntax"]
+		}
+	},
+	"auto_show_diagnostics_panel_level": 4,
+	"show_diagnostics_severity_level": 4,
+	"show_diagnostics_count_in_view_status": true,
+	"show_diagnostics_in_view_status": true,
+	"diagnostics_highlight_style": "box",
+	"show_code_actions_bulb": true
+}
