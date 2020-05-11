@@ -19,7 +19,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'ayu-theme/ayu-vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'airblade/vim-gitgutter'
@@ -35,6 +36,7 @@ Plug 'heavenshell/vim-syntax-flowtype'
 Plug 'wincent/command-t'
 Plug 'junegunn/goyo.vim'
 Plug 'Yggdroot/indentLine'
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 
@@ -43,8 +45,36 @@ call plug#end()
 " ║ Theme                                                                      ║
 " ╚════════════════════════════════════════════════════════════════════════════╝
 
+" Open NERDTree with vim
+let sbv_open_nerdtree_to_start=1
+" Open Nerd Panel with a new tab
+let sbv_open_nerdtree_with_new_tab=1
+" Enabled / Disabled placeholder chars
+let sbv_display_placeholder=1
+" Charactere placeholder for tabulation [2 char]
+let sbv_tab_placeholder='»·'
+" Charactere placeholder for space [1 char]
+let sbv_space_placeholder='·'
+" Enabled / Disabled space space for access in your vimrc
+let sbv_quick_access_config=0
+" Enabled / Disabled swap file
+let sbv_swap_file=0
+" Enabled / Disabled Shortcut
+let sbv_smart_shortcut=1
+" Indentation type [tab || space]
+let sbv_indentation_type="tab"
+" Indentation length
+let sbv_indentation_length=4
+" Relative numbers
+let sbv_enable_numbers=1
+
+
+" ╔════════════════════════════════════════════════════════════════════════════╗
+" ║ Theme                                                                      ║
+" ╚════════════════════════════════════════════════════════════════════════════╝
+
 set termguicolors
-let ayucolor="mirage"
+let ayucolor="dark"
 colorscheme ayu
 
 function! ChangeColorscheme(scheme)
@@ -52,9 +82,9 @@ function! ChangeColorscheme(scheme)
 	colorscheme ayu
 endfunction
 
-map <C-a>1 :call ChangeColorscheme("light")<CR>
-map <C-a>2 :call ChangeColorscheme("mirage")<CR>
-map <C-a>3 :call ChangeColorscheme("dark")<CR>
+map <C-v>.1 :call ChangeColorscheme("light")<CR>
+map <C-v>.2 :call ChangeColorscheme("mirage")<CR>
+map <C-v>.3 :call ChangeColorscheme("dark")<CR>
 
 let g:indentLine_enabled = 1
 let g:indentLine_char = '⋮'
@@ -67,9 +97,39 @@ let g:indentLine_setColors = 0
 " ║ NERDTree                                                                   ║
 " ╚════════════════════════════════════════════════════════════════════════════╝
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-k><C-b> :NERDTreeToggle<CR>
+autocmd VimEnter * call s:actionForOpen(sbv_open_nerdtree_to_start)
+function! s:actionForOpen(openNerdTree)
+	let filename = expand('%:t')
+	if !empty(a:openNerdTree)
+		NERDTree
+	endif
+	if !empty(filename)
+		wincmd l
+	endif
+endfunction
+autocmd BufCreate * call s:addingNewTab(sbv_open_nerdtree_with_new_tab)
+function! s:addingNewTab(openNerdTree)
+	let filename = expand('%:t')
+	if winnr('$') < 2 && exists('t:NERDTreeBufName') == 0
+		if !empty(a:openNerdTree)
+			NERDTree
+		endif
+		if !empty(filename)
+			wincmd l
+		endif
+	endif
+endfunction
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+function! s:CloseIfOnlyNerdTreeLeft()
+	if exists("t:NERDTreeBufName")
+		if bufwinnr(t:NERDTreeBufName) != -1
+			if winnr("$") == 1
+				q
+			endif
+		endif
+	endif
+endfunction
+map <C-v><C-n> :NERDTreeToggle<CR>
 
 
 " ╔════════════════════════════════════════════════════════════════════════════╗
@@ -106,7 +166,18 @@ syntax on
 syntax enable
 set clipboard=unnamed
 
-map <C-c><C-c> :qa!<CR>
-map <C-s><C-s> :w<CR>
-map <C-s><C-f> :w!<CR>
-map <C-s><C-q> :wq<CR>
+map <C-v><C-c> :qa!<CR>
+map <C-v><C-s> :w<CR>
+map <C-v><C-S> :w!<CR>
+map <C-v><C-q> :wq<CR>
+
+map <C-v><Left> <C-W>h
+map <C-v><Up> <C-W>j
+map <C-v><Down> <C-W>k
+map <C-v><Right> <C-W>l
+
+let g:multi_cursor_next_key='<C-d>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-l>'
+let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_start_key='<C-L>'
