@@ -30,8 +30,8 @@
 
 window:
   dimensions:
-    columns: 80
-    lines: 25
+    columns: 280
+    lines: 86
   padding:
     x: 8
     y: 8
@@ -65,41 +65,37 @@ font:
 draw_bold_text_with_bright_colors: true
 colors:
   primary:
-    # Night mode
-    background: '0x0A0E14' #bg
-    foreground: '0xB3B1AD' #fg
-    # Day mode
-    # background: '0xffffff'
-    # foreground: '0x0a0e14'
+    background: '0x000000'
+    foreground: '0xD0FFFC'
   cursor:
-    text: '0xB3B1AD' #fg
-    cursor: '0xE6B450' #accent
+    text: '0xF5F7E3'
+    cursor: '0xD0FFFC'
   selection:
-    text: '0xeaeaea'
-    background: '0x333333'
+    text: '0xF5F7E3'
+    background: '0x314F78'
   normal:
-    black:   '0x3D424D' #ui
-    red:     '0xF07178' #syntax.markup
-    green:   '0xC2D94C' #syntax.string
-    yellow:  '0xFFB454' #syntax.func
-    blue:    '0x59C2FF' #syntax.entity
-    magenta: '0xFFEE99' #syntax.constant
-    cyan:    '0x95E6CB' #syntax.regexp
-    white:   '0xB3B1AD' #common.fg
+    black:   '0x263F45'
+    red:     '0x8A281A'
+    green:   '0x79815D'
+    yellow:  '0xC5CF8D'
+    blue:    '0x9DC3BF'
+    magenta: '0x9B6CBE'
+    cyan:    '0x60C5D8'
+    white:   '0xD1FEFC'
   bright:
-    black:   '0x707A8C'
-    red:     '0xF28779'
-    green:   '0xBAE67E'
-    yellow:  '0xFFD580'
-    blue:    '0x73D0FF'
-    magenta: '0xD4BFFF'
-    cyan:    '0x95E6CB'
-    white:   '0xCBCCC6'
+    black:   '0x396269'
+    red:     '0xFC674E'
+    green:   '0xB3BD93'
+    yellow:  '0xFCFFC7'
+    blue:    '0xC4FEFD'
+    magenta: '0xAD7FA8'
+    cyan:    '0x76C8D9'
+    white:   '0xF6F7E2'
   indexed_colors: []
 visual_bell:
-  animation: EaseOutExpo
+  animation: Linear
   duration: 0
-  color: '0xffffff'
+  color: '0x320F09'
 background_opacity: 0.92
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
@@ -129,8 +125,8 @@ debug:
 key_bindings:
   - { key: Paste,                     action: Paste                            }
   - { key: Copy,                      action: Copy                             }
-  - { key: L,        mods: Control,   action: ClearLogNotice                   }
-  - { key: L,        mods: Control,   chars: "\x0c"                            }
+  # - { key: L,        mods: Control,   action: ClearLogNotice                   }
+  # - { key: L,        mods: Control,   chars: "\x0c"                            }
   - { key: Home,     mods: Alt,       chars: "\x1b[1;3H"                       }
   - { key: Home,                      chars: "\x1bOH",        mode: AppCursor  }
   - { key: Home,                      chars: "\x1b[H",        mode: ~AppCursor }
