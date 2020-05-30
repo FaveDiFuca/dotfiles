@@ -6,8 +6,8 @@
 	"installed_packages":
 	[
 		"A File Icon",
+		"Agila Theme",
 		"All Autocomplete",
-		"auto-dark",
 		"Autotools",
 		"ayu",
 		"Babel",
@@ -27,10 +27,13 @@
 		"Dockerfile Syntax Highlighting",
 		"DoxyDoxygen",
 		"DoxyDoxygen (evolution)",
+		"Edge Theme",
 		"EditorConfig",
 		"Elixir",
+		"Elm Syntax Highlighting",
 		"Git blame",
 		"GitGutter",
+		"gruvbox",
 		"Handlebars",
 		"HTML5",
 		"Indent XML",
@@ -39,9 +42,12 @@
 		"LESS",
 		"LSP",
 		"LSP-dockerfile",
+		"LSP-elm",
 		"LSP-json",
 		"LSP-typescript",
 		"LSP-yaml",
+		"Meetio Theme",
+		"Monocyanide Colorscheme",
 		"nginx",
 		"Ninja",
 		"Package Control",
@@ -54,6 +60,9 @@
 		"SideBarEnhancements",
 		"Terminal",
 		"Terraform",
+		"Theme - Cyanide",
+		"Theme - Tech49",
+		"TOML",
 		"TypeScript"
 	]
 }

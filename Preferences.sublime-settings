@@ -1,6 +1,4 @@
 {
-	"_________PLUGINS_START_HERE_________": true,
-	"__________________EOF_______________": true,
 	"always_show_minimap_viewport": true,
 	"auto_close_tags": true,
 	"auto_complete": true,
@@ -37,9 +35,7 @@
 		"phpbb": false
 	},
 	"codeformatter_php_path": "/usr/local/bin/php",
-	"color_scheme": "Packages/ayu/ayu-light.sublime-color-scheme",
-	"color_scheme.dark": "Packages/ayu/ayu-dark.sublime-color-scheme",
-	"color_scheme.light": "Packages/ayu/ayu-light.sublime-color-scheme",
+	"color_scheme": "Packages/Theme - Tech49/Tech49.tmTheme",
 	"dart_sdk_path": "/opt/flutter/bin/cache/dart-sdk",
 	"default_encoding": "UTF-8",
 	"detect_indentation": true,
@@ -61,7 +57,7 @@
 		"node_modules",
 		"cache"
 	],
-	"font_face": "Fira Code",
+	"font_face": "Fira Code Retina",
 	"font_options":
 	[
 		"gray_antialias",
@@ -92,6 +88,7 @@
 	"material_theme_small_statusbar": true,
 	"material_theme_small_tab": true,
 	"material_theme_tabs_separator": true,
+	"mdpopups.disable": false,
 	"mouse_wheel_switches_tabs": true,
 	"open_files_in_new_window": true,
 	"overlay_scroll_bars": "enabled",
@@ -112,7 +109,7 @@
 	"smart_indent": true,
 	"tab_completion": true,
 	"tab_size": 4,
-	"theme": "ayu-light.sublime-theme",
+	"theme": "gruvbox.sublime-theme",
 	"theme.dark": "ayu-dark.sublime-theme",
 	"theme.light": "ayu-light.sublime-theme",
 	"translate_tabs_to_spaces": false,
