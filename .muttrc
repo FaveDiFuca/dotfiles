@@ -624,7 +624,7 @@ color body          magenta             default         "([a-z][a-z0-9+-]*://(((
 #folder-hook gmail/important    "color status        J_black         yellow          "
 
 # Scanning
-mailboxes `echo -n "+ "; find ~/Cloud/Mail -maxdepth 1 -type d -name ".*" -printf "+'%f' "`
+#mailboxes `echo -n "+ "; gfind ~/Cloud/Mail -maxdepth 1 -type d -name ".*" -printf "+'%f' "`
 
 # Macros
 macro index c "<change-folder>?<toggle-mailboxes>" "open a different folder"
