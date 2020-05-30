@@ -20,10 +20,13 @@
 			"syntaxes":  ["Packages/Terraform/Terraform.sublime-syntax"]
 		}
 	},
+	"auto_show_diagnostics_panel": "never",
 	"auto_show_diagnostics_panel_level": 4,
 	"show_diagnostics_severity_level": 4,
 	"show_diagnostics_count_in_view_status": true,
 	"show_diagnostics_in_view_status": true,
 	"diagnostics_highlight_style": "box",
-	"show_code_actions_bulb": true
+	"show_code_actions_bulb": true,
+	"show_symbol_action_links": true,
+	"document_highlight_style": "underline"
 }
