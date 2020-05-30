@@ -75,7 +75,7 @@ let sbv_enable_numbers=1
 
 set termguicolors
 let ayucolor="dark"
-colorscheme ayu
+colorscheme tech49
 
 function! ChangeColorscheme(scheme)
 	let g:ayucolor=a:scheme
@@ -90,8 +90,9 @@ let g:indentLine_enabled = 1
 let g:indentLine_char = '⋮'
 let g:indentLine_first_char = '⋮'
 let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
-
+let g:indentLine_setColors = 1
+" let g:indentLine_color_term = 116
+" let g:indentLine_bgcolor_term = 0
 
 " ╔════════════════════════════════════════════════════════════════════════════╗
 " ║ NERDTree                                                                   ║
